@@ -1,0 +1,49 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/build/baseext/windows-x86_64/**",
+                "${workspaceFolder}/alliedmodders/hl2sdk/**",
+                "${workspaceFolder}/alliedmodders/metamod/**",
+                "${workspaceFolder}/alliedmodders/metamod/core/**",
+                "${workspaceFolder}/src/**",
+                "${workspaceFolder}/vendor/**"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE",
+                "WIN32",
+                "COMPILER_GCC",
+                "META_IS_SOURCE2"
+            ],
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "windows-gcc-x64"
+        },
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/build/baseext/linux-x86_64/**",
+                "${workspaceFolder}/alliedmodders/hl2sdk/**",
+                "${workspaceFolder}/alliedmodders/metamod/**",
+                "${workspaceFolder}/alliedmodders/metamod/core/**",
+                "${workspaceFolder}/src/**",
+                "${workspaceFolder}/vendor/**"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE",
+                "POSIX",
+                "COMPILER_GCC",
+                "META_IS_SOURCE2"
+            ],
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "linux-gcc-x64"
+        }
+    ],
+    "version": 4
+}
