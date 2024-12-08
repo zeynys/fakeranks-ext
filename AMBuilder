@@ -20,6 +20,11 @@ for sdk_target in MMSPlugin.sdk_targets:
             if fnmatch.fnmatch(_file, '*.cpp'):
                 binary.sources.append(os.path.join(root, _file).replace("\\", "/"))
 
+    for root, dirs, files in os.walk(os.path.join(builder.sourcePath, 'vendor', 'lua')):
+        for _file in files:
+            if fnmatch.fnmatch(_file, '*.c') and not "testes" in root and not "onelua.c" in _file:
+                binary.sources.append(os.path.join(root, _file).replace("\\", "/"))
+
     binary.sources.append(os.path.join(sdk['path'], 'entity2', 'entitysystem.cpp'))
     binary.sources.append(os.path.join(sdk['path'], 'entity2', 'entityidentity.cpp'))
     binary.sources.append(os.path.join(sdk['path'], 'entity2', 'entitykeyvalues.cpp'))

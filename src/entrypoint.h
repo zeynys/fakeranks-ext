@@ -15,6 +15,9 @@ public:
     void AllExtensionsLoaded();
     void AllPluginsLoaded();
 
+    bool OnPluginLoad(std::string pluginName, void* pluginState, PluginKind_t kind, std::string& error);
+    bool OnPluginUnload(std::string pluginName, void* pluginState, PluginKind_t kind, std::string& error);
+
 public:
     const char* GetAuthor();
     const char* GetName();
@@ -23,7 +26,6 @@ public:
 };
 
 extern BaseExtension g_Ext;
-extern SourceHook::ISourceHook *g_SHPtr;
-extern ISmmAPI* g_SMAPI;
+DECLARE_GLOBALVARS();
 
 #endif

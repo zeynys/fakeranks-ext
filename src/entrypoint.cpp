@@ -5,8 +5,7 @@
 ////////////////////////////////////////////////////////////
 
 BaseExtension g_Ext;
-SourceHook::ISourceHook *g_SHPtr = nullptr;
-ISmmAPI* g_SMAPI = nullptr;
+CREATE_GLOBALVARS();
 
 //////////////////////////////////////////////////////////////
 /////////////////          Core Class          //////////////
@@ -15,6 +14,8 @@ ISmmAPI* g_SMAPI = nullptr;
 EXT_EXPOSE(g_Ext);
 bool BaseExtension::Load(std::string& error, SourceHook::ISourceHook *SHPtr, ISmmAPI* ismm, bool late)
 {
+    SAVE_GLOBALVARS();
+
     ismm->ConPrint("Printing a text from extensions land!\n");
     return true;
 }
@@ -32,6 +33,16 @@ void BaseExtension::AllExtensionsLoaded()
 void BaseExtension::AllPluginsLoaded()
 {
 
+}
+
+bool BaseExtension::OnPluginLoad(std::string pluginName, void* pluginState, PluginKind_t kind, std::string& error)
+{
+    return true;
+}
+
+bool BaseExtension::OnPluginUnload(std::string pluginName, void* pluginState, PluginKind_t kind, std::string& error)
+{
+    return true;
 }
 
 const char* BaseExtension::GetAuthor()
