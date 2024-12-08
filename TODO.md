@@ -1,4 +1,4 @@
-- [ ] Commands
+- [x] Commands
 - [ ] Configuration (Read, Write?, Create)
 - [x] Hooks
 - [x] SDK
