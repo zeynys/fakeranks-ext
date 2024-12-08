@@ -1,4 +1,4 @@
-- [] Commands
-- [] Hooks
+- [ ] Commands
+- [ ] Hooks
 - [x] SDK
-- [] Signatures, Offsets
+- [x] Signatures, Offsets
