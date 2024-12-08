@@ -1,5 +1,5 @@
 - [x] Commands
-- [ ] Configuration (Read, Write?, Create)
+- [x] Configuration (Read)
 - [x] Events (Trigger Event)
 - [ ] Database Interface
 - [x] Hooks
