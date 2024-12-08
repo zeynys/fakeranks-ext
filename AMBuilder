@@ -22,7 +22,7 @@ for sdk_target in MMSPlugin.sdk_targets:
 
     for root, dirs, files in os.walk(os.path.join(builder.sourcePath, 'vendor', 'lua')):
         for _file in files:
-            if fnmatch.fnmatch(_file, '*.c') and not "testes" in root and not "onelua.c" in _file:
+            if fnmatch.fnmatch(_file, '*.cpp') and not "testes" in root and not "onelua.cpp" in _file:
                 binary.sources.append(os.path.join(root, _file).replace("\\", "/"))
 
     binary.sources.append(os.path.join(sdk['path'], 'entity2', 'entitysystem.cpp'))
@@ -151,6 +151,7 @@ for sdk_target in MMSPlugin.sdk_targets:
 
     binary.compiler.cxxincludes += [
         os.path.join(builder.sourcePath, 'vendor'),
+        os.path.join(builder.sourcePath, 'vendor', 'LuaBridge', 'Source'),
 
         os.path.join(sdk['path']),
         os.path.join(sdk['path'], 'public'),
