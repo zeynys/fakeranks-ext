@@ -26,7 +26,7 @@ jobs:
               uses: reecetech/version-increment@2024.4.4
               id: version
               with:
-                release_branch: master
+                release_branch: main
                 increment: patch
                 use_api: true
 
@@ -95,3 +95,34 @@ jobs:
               with:
                   name: Extension.Windows
                   path: ${{ github.workspace }}/${{ github.event.repository.name }}/build/package
+
+    release:
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+        permissions:
+            contents: write
+        needs: ["versioning", "build"]
+        runs-on: ubuntu-latest
+        container:
+            image: registry.gitlab.steamos.cloud/steamrt/sniper/sdk
+        steps:
+            - uses: actions/download-artifact@v4
+              id: download-artifacts
+              with:
+                  path: build
+
+            - name: Prepare ZIP Files
+              run: |
+                sudo apt install p7zip-full -y;
+                (cd build/Extension.Linux; 7z a -tzip ../../../Extension.Linux.zip *)
+                (cd build/Extension.Windows; 7z a -tzip ../../../Extension.Windows.zip *)
+                echo "PATH_ARTIFACTS=$(cd ..; pwd)" >> $GITHUB_ENV
+
+            - name: Release
+              id: release
+              uses: softprops/action-gh-release@v2
+              with:
+                  tag_name: v${{ needs.versioning.outputs.version }}
+                  make_latest: "true"
+                  files: |
+                      ${{env.PATH_ARTIFACTS}}/Extension.Linux.zip
+                      ${{env.PATH_ARTIFACTS}}/Extension.Windows.zip
