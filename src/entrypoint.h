@@ -5,6 +5,7 @@
 
 #include <swiftly-ext/core.h>
 #include <swiftly-ext/extension.h>
+#include <swiftly-ext/hooks/NativeHooks.h>
 
 class BaseExtension : public SwiftlyExt
 {

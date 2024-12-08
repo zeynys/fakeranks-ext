@@ -1,4 +1,5 @@
 - [ ] Commands
-- [ ] Hooks
+- [ ] Configuration (Read, Write?, Create)
+- [x] Hooks
 - [x] SDK
 - [x] Signatures, Offsets
