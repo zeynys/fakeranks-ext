@@ -1,7 +1,0 @@
-- [x] Commands
-- [x] Configuration (Read)
-- [x] Events (Trigger Event)
-- [ ] Database Interface
-- [x] Hooks
-- [x] SDK
-- [x] Signatures, Offsets
