@@ -8,7 +8,8 @@
                 "${workspaceFolder}/alliedmodders/metamod/**",
                 "${workspaceFolder}/alliedmodders/metamod/core/**",
                 "${workspaceFolder}/src/**",
-                "${workspaceFolder}/vendor/**"
+                "${workspaceFolder}/vendor/**",
+                "${workspaceFolder}/vendor/LuaBridge/Source/**"
             ],
             "defines": [
                 "_DEBUG",
@@ -30,7 +31,8 @@
                 "${workspaceFolder}/alliedmodders/metamod/**",
                 "${workspaceFolder}/alliedmodders/metamod/core/**",
                 "${workspaceFolder}/src/**",
-                "${workspaceFolder}/vendor/**"
+                "${workspaceFolder}/vendor/**",
+                "${workspaceFolder}/vendor/LuaBridge/Source/**"
             ],
             "defines": [
                 "_DEBUG",
