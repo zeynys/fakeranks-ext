@@ -1,8 +1,8 @@
 import os
 import fnmatch
 
-MMSPlugin.plugin_name = 'utils-ext'
-MMSPlugin.plugin_alias = 'utils-ext'
+MMSPlugin.plugin_name = 'baseext'
+MMSPlugin.plugin_alias = 'baseext'
 
 for sdk_target in MMSPlugin.sdk_targets:
     sdk = sdk_target.sdk

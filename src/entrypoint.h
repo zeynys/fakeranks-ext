@@ -7,12 +7,12 @@
 #include <swiftly-ext/extension.h>
 #include <swiftly-ext/hooks/NativeHooks.h>
 
-class UtilsExtension : public SwiftlyExt
+class BaseExtension : public SwiftlyExt
 {
 public:
-    bool Load(std::string& error, SourceHook::ISourceHook* SHPtr, ISmmAPI* ismm, bool late);
+    bool Load(std::string& error, SourceHook::ISourceHook *SHPtr, ISmmAPI* ismm, bool late);
     bool Unload(std::string& error);
-
+    
     void AllExtensionsLoaded();
     void AllPluginsLoaded();
 
@@ -26,7 +26,7 @@ public:
     const char* GetWebsite();
 };
 
-extern UtilsExtension g_Ext;
+extern BaseExtension g_Ext;
 DECLARE_GLOBALVARS();
 
 #endif

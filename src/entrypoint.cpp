@@ -4,8 +4,8 @@
 /////////////////        Core Variables        //////////////
 ////////////////////////////////////////////////////////////
 
-UtilsExtension g_Ext;
-CUtlVector<FuncHookBase*> g_vecHooks;
+BaseExtension g_Ext;
+CUtlVector<FuncHookBase *> g_vecHooks;
 CREATE_GLOBALVARS();
 
 //////////////////////////////////////////////////////////////
@@ -13,10 +13,10 @@ CREATE_GLOBALVARS();
 ////////////////////////////////////////////////////////////
 
 EXT_EXPOSE(g_Ext);
-bool UtilsExtension::Load(std::string& error, SourceHook::ISourceHook* SHPtr, ISmmAPI* ismm, bool late)
+bool BaseExtension::Load(std::string& error, SourceHook::ISourceHook *SHPtr, ISmmAPI* ismm, bool late)
 {
     SAVE_GLOBALVARS();
-    if (!InitializeHooks()) {
+    if(!InitializeHooks()) {
         error = "Failed to initialize hooks.";
         return false;
     }
@@ -25,43 +25,43 @@ bool UtilsExtension::Load(std::string& error, SourceHook::ISourceHook* SHPtr, IS
     return true;
 }
 
-bool UtilsExtension::Unload(std::string& error)
+bool BaseExtension::Unload(std::string& error)
 {
     UnloadHooks();
     return true;
 }
 
-void UtilsExtension::AllExtensionsLoaded()
+void BaseExtension::AllExtensionsLoaded()
 {
 
 }
 
-void UtilsExtension::AllPluginsLoaded()
+void BaseExtension::AllPluginsLoaded()
 {
 
 }
 
-bool UtilsExtension::OnPluginLoad(std::string pluginName, void* pluginState, PluginKind_t kind, std::string& error)
-{
-    return true;
-}
-
-bool UtilsExtension::OnPluginUnload(std::string pluginName, void* pluginState, PluginKind_t kind, std::string& error)
+bool BaseExtension::OnPluginLoad(std::string pluginName, void* pluginState, PluginKind_t kind, std::string& error)
 {
     return true;
 }
 
-const char* UtilsExtension::GetAuthor()
+bool BaseExtension::OnPluginUnload(std::string pluginName, void* pluginState, PluginKind_t kind, std::string& error)
+{
+    return true;
+}
+
+const char* BaseExtension::GetAuthor()
 {
     return "Swiftly Development Team";
 }
 
-const char* UtilsExtension::GetName()
+const char* BaseExtension::GetName()
 {
-    return "Utils Extension";
+    return "Base Extension";
 }
 
-const char* UtilsExtension::GetVersion()
+const char* BaseExtension::GetVersion()
 {
 #ifndef VERSION
     return "Local";
@@ -70,7 +70,7 @@ const char* UtilsExtension::GetVersion()
 #endif
 }
 
-const char* UtilsExtension::GetWebsite()
+const char* BaseExtension::GetWebsite()
 {
     return "https://swiftlycs2.net/";
 }
