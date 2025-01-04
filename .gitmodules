@@ -6,7 +6,7 @@
 	url = https://github.com/alliedmodders/metamod-source
 [submodule "alliedmodders/hl2sdk"]
 	path = alliedmodders/hl2sdk
-	url = https://github.com/alliedmodders/hl2sdk
+	url = https://github.com/swiftly-solution/hl2sdk
 	branch = cs2
 [submodule "vendor/swiftly-ext"]
 	path = vendor/swiftly-ext
