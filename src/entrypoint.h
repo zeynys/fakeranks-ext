@@ -2,22 +2,25 @@
 #define _entrypoint_h
 
 #include <string>
+#include <map>
 
 #include <swiftly-ext/core.h>
 #include <swiftly-ext/extension.h>
 #include <swiftly-ext/hooks/NativeHooks.h>
 
-class BaseExtension : public SwiftlyExt
+class FakeRanks : public SwiftlyExt
 {
 public:
-    bool Load(std::string& error, SourceHook::ISourceHook *SHPtr, ISmmAPI* ismm, bool late);
+    bool Load(std::string& error, SourceHook::ISourceHook* SHPtr, ISmmAPI* ismm, bool late);
     bool Unload(std::string& error);
-    
+
     void AllExtensionsLoaded();
-    void AllPluginsLoaded();
+    // void AllPluginsLoaded();
 
     bool OnPluginLoad(std::string pluginName, void* pluginState, PluginKind_t kind, std::string& error);
     bool OnPluginUnload(std::string pluginName, void* pluginState, PluginKind_t kind, std::string& error);
+
+    int rankType;
 
 public:
     const char* GetAuthor();
@@ -26,7 +29,7 @@ public:
     const char* GetWebsite();
 };
 
-extern BaseExtension g_Ext;
+extern FakeRanks g_Ext;
 DECLARE_GLOBALVARS();
 
 #endif
