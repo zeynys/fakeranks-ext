@@ -15,7 +15,7 @@ public:
     bool Unload(std::string& error);
 
     void AllExtensionsLoaded();
-    // void AllPluginsLoaded();
+    void AllPluginsLoaded();
 
     bool OnPluginLoad(std::string pluginName, void* pluginState, PluginKind_t kind, std::string& error);
     bool OnPluginUnload(std::string pluginName, void* pluginState, PluginKind_t kind, std::string& error);
