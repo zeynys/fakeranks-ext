@@ -32,3 +32,6 @@ for task in MMSPlugin.binaries:
 with open(os.path.join(builder.buildPath, 'pdblog.txt'), 'wt') as fp:
   for line in pdb_list:
     fp.write(line.path + '\n')
+
+gamedata_folder = builder.AddFolder(os.path.join('addons', 'swiftly', 'gamedata', 'fakeranks'))
+builder.AddCopy(os.path.join(builder.sourcePath, 'plugin_files', 'gamedata', 'fakeranks', 'signatures.json'), gamedata_folder)
