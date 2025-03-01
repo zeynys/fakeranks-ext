@@ -1,11 +1,8 @@
 #include "entrypoint.h"
 #include "ranksclass.h"
-#include <lua/lua.h>
-#include <lua/lauxlib.h>
-#include <lua/lualib.h>
-#include <LuaBridge/LuaBridge.h>
 #include <ehandle.h>
 #include <swiftly-ext/config.h>
+#include <Embedder.h>
 
 #include <swiftly-ext/sdk.h>
 
@@ -87,24 +84,27 @@ void FakeRanks::AllPluginsLoaded()
 bool FakeRanks::OnPluginLoad(std::string pluginName, void* pluginState, PluginKind_t kind, std::string& error)
 {
 
-    if (kind == PluginKind_t::Lua) {
-        lua_State* state = (lua_State*)pluginState;
+    EContext* state = (EContext*)pluginState;
 
-        luabridge::getGlobalNamespace(state)
-            .beginClass<RanksClass>("RanksClass")
-            .addConstructor<void (*)(std::string)>()
+
+        BeginClass<RanksClass>("RanksClass", state)
+            .addConstructor<std::string>()
             .addFunction("GetRankPoints", &RanksClass::GetRankPoints)
             .addFunction("GetRankSkillID", &RanksClass::GetRankSkillID)
-            .endClass();
+        .endClass();
 
-        luaL_dostring(state, "ranks = RanksClass(GetCurrentPluginName())");
-    }
+        GetGlobalNamespace(state).addConstant("ranks", RanksClass(pluginName));
+
 
     return true;
 }
 
 bool FakeRanks::OnPluginUnload(std::string pluginName, void* pluginState, PluginKind_t kind, std::string& error)
 {
+    EContext* state = (EContext*)pluginState;
+
+    GetGlobalNamespace(state).addConstant("ranks", nullptr);
+
     return true;
 }
 

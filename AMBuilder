@@ -1,5 +1,6 @@
 import os
 import fnmatch
+import json
 
 MMSPlugin.plugin_name = 'fakeranks.ext'
 MMSPlugin.plugin_alias = 'fakeranks.ext'
@@ -20,15 +21,25 @@ for sdk_target in MMSPlugin.sdk_targets:
             if fnmatch.fnmatch(_file, '*.cpp'):
                 binary.sources.append(os.path.join(root, _file).replace("\\", "/"))
 
-    for root, dirs, files in os.walk(os.path.join(builder.sourcePath, 'vendor', 'lua')):
+    for root, dirs, files in os.walk(os.path.join(builder.sourcePath, "vendor", "embedder", "src")):
         for _file in files:
-            if fnmatch.fnmatch(_file, '*.cpp') and not "testes" in root and not "onelua.cpp" in _file:
+            if fnmatch.fnmatch(_file, '*.cpp'):
                 binary.sources.append(os.path.join(root, _file).replace("\\", "/"))
 
     binary.sources.append(os.path.join(sdk['path'], 'entity2', 'entitysystem.cpp'))
     binary.sources.append(os.path.join(sdk['path'], 'entity2', 'entityidentity.cpp'))
     binary.sources.append(os.path.join(sdk['path'], 'entity2', 'entitykeyvalues.cpp'))
     binary.sources.append(os.path.join(sdk['path'], 'tier1', 'keyvalues3.cpp'))
+
+    with open(os.path.join(builder.sourcePath, "vendor", "embedder", "libs", "links.json")) as f:
+        embedder_linking = json.load(f)
+
+    libs = embedder_linking["libraries"][binary.compiler.target.platform]
+    incls = embedder_linking["includes"]
+    for lib in libs:
+        binary.compiler.postlink += [os.path.join(builder.sourcePath, "vendor", "embedder", "libs", lib)]
+    for incl in incls:
+        binary.compiler.cxxincludes += [os.path.join(builder.sourcePath, 'vendor', 'embedder', 'libs', incl)]
 
     if binary.compiler.target.platform == 'linux':
         binary.compiler.cxxflags += [
@@ -151,7 +162,7 @@ for sdk_target in MMSPlugin.sdk_targets:
 
     binary.compiler.cxxincludes += [
         os.path.join(builder.sourcePath, 'vendor'),
-        os.path.join(builder.sourcePath, 'vendor', 'LuaBridge', 'Source'),
+        os.path.join(builder.sourcePath, 'vendor', 'embedder', 'src'),
 
         os.path.join(sdk['path']),
         os.path.join(sdk['path'], 'public'),
