@@ -39,7 +39,7 @@ bool FakeRanks::Load(std::string& error, SourceHook::ISourceHook* SHPtr, ISmmAPI
 dyno::ReturnAction Hook_CCSPlayerPawnBase_PostThink(dyno::CallbackType cbType, dyno::IHook& hook)
 {
     void* _this = hook.getArgument<void*>(0);
-    if (!_this) return dyno::ReturnAction::Ignored;;
+    if (!_this) return dyno::ReturnAction::Ignored;
     CHandle<CEntityInstance> controller = SDKGetProp<CHandle<CEntityInstance>>((void*)_this, "CCSPlayerPawnBase", "m_hOriginalController");
     if (!controller) return dyno::ReturnAction::Ignored;
     int playerid = controller.GetEntryIndex() - 1;
