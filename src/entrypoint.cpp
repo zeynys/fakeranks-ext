@@ -57,8 +57,7 @@ dyno::ReturnAction Hook_CCSPlayerPawnBase_PostThink(dyno::CallbackType cbType, d
             SDKSetProp<int32_t>((void*)controller.Get(), "CCSPlayerController", "m_iCompetitiveRanking", rank[playerid]);
         }
     }
-    // return TCCSPlayerPawnBase_PostThink(_this); // return dyno::ReturnAction -- what action? Handled?
-    return dyno::ReturnAction::Handled
+    return dyno::ReturnAction::Handled;
 }
 
 bool FakeRanks::Unload(std::string& error)
