@@ -2,7 +2,7 @@
 #include "ranksclass.h"
 #include <ehandle.h>
 #include <swiftly-ext/config.h>
-#include <Embedder.h>
+#include <embedder/src/embedder.h>
 
 #include <swiftly-ext/sdk.h>
 
@@ -11,14 +11,13 @@
 ////////////////////////////////////////////////////////////
 
 FakeRanks g_Ext;
-CUtlVector<FuncHookBase*> g_vecHooks;
 CREATE_GLOBALVARS();
 std::map<int, int> points;
 std::map<int, int> rank;
 
-void Hook_CCSPlayerPawnBase_PostThink(void* _this);
+dyno::ReturnAction Hook_CCSPlayerPawnBase_PostThink(dyno::CallbackType cbType, dyno::IHook& hook);
 
-FuncHook<decltype(Hook_CCSPlayerPawnBase_PostThink)> TCCSPlayerPawnBase_PostThink(Hook_CCSPlayerPawnBase_PostThink, "CCSPlayerPawnBase_PostThink");
+FunctionHook CCSPlayerPawnBase_PostThink("CCSPlayerPawnBase_PostThink", dyno::CallbackType::Pre, Hook_CCSPlayerPawnBase_PostThink, "p", 'v');
 
 //////////////////////////////////////////////////////////////
 /////////////////          Core Class          //////////////
@@ -29,11 +28,6 @@ EXT_EXPOSE(g_Ext);
 bool FakeRanks::Load(std::string& error, SourceHook::ISourceHook* SHPtr, ISmmAPI* ismm, bool late)
 {
     SAVE_GLOBALVARS();
-    if (!InitializeHooks()) {
-        error = "Failed to initialize hooks.";
-        return false;
-    }
-
 
     std::string ranking = FetchConfigValue<std::string>("fakeranks.type");
     rankType = (ranking == "wingman") ? 7 : (ranking == "premier") ? 11 : 12;
@@ -42,11 +36,12 @@ bool FakeRanks::Load(std::string& error, SourceHook::ISourceHook* SHPtr, ISmmAPI
     return true;
 }
 
-void Hook_CCSPlayerPawnBase_PostThink(void* _this)
+dyno::ReturnAction Hook_CCSPlayerPawnBase_PostThink(dyno::CallbackType cbType, dyno::IHook& hook)
 {
-    if (!_this) return TCCSPlayerPawnBase_PostThink(_this);
+    void* _this = hook.getArgument<void*>(0);
+    if (!_this) return dyno::ReturnAction::Ignored;;
     CHandle<CEntityInstance> controller = SDKGetProp<CHandle<CEntityInstance>>((void*)_this, "CCSPlayerPawnBase", "m_hOriginalController");
-    if (!controller) return TCCSPlayerPawnBase_PostThink(_this);
+    if (!controller) return dyno::ReturnAction::Ignored;
     int playerid = controller.GetEntryIndex() - 1;
 
 
@@ -62,12 +57,12 @@ void Hook_CCSPlayerPawnBase_PostThink(void* _this)
             SDKSetProp<int32_t>((void*)controller.Get(), "CCSPlayerController", "m_iCompetitiveRanking", rank[playerid]);
         }
     }
-    return TCCSPlayerPawnBase_PostThink(_this);
+    // return TCCSPlayerPawnBase_PostThink(_this); // return dyno::ReturnAction -- what action? Handled?
+    return dyno::ReturnAction::Handled
 }
 
 bool FakeRanks::Unload(std::string& error)
 {
-    UnloadHooks();
     return true;
 }
 
@@ -94,6 +89,7 @@ bool FakeRanks::OnPluginLoad(std::string pluginName, void* pluginState, PluginKi
         .endClass();
 
         GetGlobalNamespace(state).addConstant("ranks", RanksClass(pluginName));
+        SetupScripting(state);
 
 
     return true;
@@ -101,10 +97,6 @@ bool FakeRanks::OnPluginLoad(std::string pluginName, void* pluginState, PluginKi
 
 bool FakeRanks::OnPluginUnload(std::string pluginName, void* pluginState, PluginKind_t kind, std::string& error)
 {
-    EContext* state = (EContext*)pluginState;
-
-    GetGlobalNamespace(state).addConstant("ranks", nullptr);
-
     return true;
 }
 

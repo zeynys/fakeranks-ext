@@ -6,7 +6,8 @@
 
 #include <swiftly-ext/core.h>
 #include <swiftly-ext/extension.h>
-#include <swiftly-ext/hooks/NativeHooks.h>
+#include <swiftly-ext/hooks/function.h>
+#include <swiftly-ext/hooks/vfunction.h>
 
 class FakeRanks : public SwiftlyExt
 {
