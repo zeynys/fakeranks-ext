@@ -77,21 +77,11 @@ void FakeRanks::AllPluginsLoaded()
 
 bool FakeRanks::OnPluginLoad(std::string pluginName, void* pluginState, PluginKind_t kind, std::string& error)
 {
-
-    EContext* state = (EContext*)pluginState;
-
-
-        BeginClass<RanksClass>("RanksClass", state)
-            .addConstructor<std::string>()
-            .addFunction("GetRankPoints", &RanksClass::GetRankPoints)
-            .addFunction("GetRankSkillID", &RanksClass::GetRankSkillID)
-        .endClass();
-
-        GetGlobalNamespace(state).addConstant("ranks", RanksClass(pluginName));
+        EContext* state = (EContext*)pluginState;
+    
         SetupScripting(state);
-
-
-    return true;
+    
+        return true;
 }
 
 bool FakeRanks::OnPluginUnload(std::string pluginName, void* pluginState, PluginKind_t kind, std::string& error)
