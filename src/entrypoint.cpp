@@ -2,7 +2,7 @@
 #include "ranksclass.h"
 #include <ehandle.h>
 #include <swiftly-ext/config.h>
-#include <embedder/src/embedder.h>
+#include <embedder/src/Embedder.h>
 
 #include <swiftly-ext/sdk.h>
 
