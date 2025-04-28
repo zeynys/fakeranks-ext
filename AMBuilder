@@ -62,9 +62,6 @@ for sdk_target in MMSPlugin.sdk_targets:
             "-fexceptions",
         ]
         binary.compiler.postlink += [
-            os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'libfunchook.a'),
-      		os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'libdistorm.a'),
-
             "-lgnutls",
             "-lz",
             "-lpthread",
